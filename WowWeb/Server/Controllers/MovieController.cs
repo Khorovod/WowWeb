@@ -12,16 +12,21 @@ namespace WowWeb.Server.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        List<Movie> _dummyMovies = new List<Movie>()
+        static List<Movie> _dummyMovies = new List<Movie>()
         {
-            new Movie{Id = 1, Title = "Drive", Description = "Best movie ever, Gosling didnt dies at the end...", Rating = 10, Genre = new Genre{Name = Genres.Think}},
-            new Movie{Id = 2, Title = "In Bruges", Description = "Ralph Fiennes is enraged...", Rating = 10, Genre = new Genre{Name = Genres.Drama}},
-            new Movie{Id = 3, Title = "The Grand Budapest Hotel", Description = "Wes Anderson + Ralph Fiennes as Monsieur Gustave H.", Rating = 10, Genre = new Genre{Name = Genres.Comedy}}
+            new Movie{Id = 1, Title = "Drive", Description = "Best movie ever, Gosling didnt dies at the end...", Rating = 10, Genre = new Genre{Name = "Deep"}},
+            new Movie{Id = 2, Title = "In Bruges", Description = "Ralph Fiennes is enraged...", Rating = 9, Genre = new Genre{Name = "Drama"}},
+            new Movie{Id = 3, Title = "The Grand Budapest Hotel", Description = "Wes Anderson + Ralph Fiennes as Monsieur Gustave H.", Rating = 10, Genre = new Genre{Name = "Comedy"}}
 
         };
         List<Genre> _genres = new List<Genre>()
         {
-            new Genre(Name )
+            new Genre{Id = 0, Name = "Hmmmm"},
+            new Genre{Id = 1, Name = "Action"},
+            new Genre{Id = 2, Name = "Deep"},
+            new Genre{Id = 3, Name = "Drama"},
+            new Genre{Id = 4, Name = "Comedy"},
+            new Genre{Id = 5, Name = "Obscure"}
         };
 
         [HttpGet("genres")]
@@ -50,6 +55,7 @@ namespace WowWeb.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMovie(Movie movie)
         {
+            movie.Id = _dummyMovies.Max(i => i.Id + 1);
             _dummyMovies.Add(movie);
             return Ok(_dummyMovies);
         }

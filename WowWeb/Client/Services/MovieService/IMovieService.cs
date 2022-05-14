@@ -7,6 +7,8 @@ namespace WowWeb.Client.Services
 {
     public interface IMovieService
     {
+        List<Movie> Movies { get; set; }
+
         Task<List<Movie>> GetMovies();
         Task<Movie> GetMovie(int id);
         Task<List<Movie>> AddMovie(Movie movie);

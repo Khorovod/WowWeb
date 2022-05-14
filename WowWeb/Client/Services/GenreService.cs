@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -17,9 +15,11 @@ namespace WowWeb.Client.Services
             _httpClient = httpClient;
         }
 
-        public Task<List<Genres>> GetGenres()
+        public List<Genre> Genres { get; set; } = new List<Genre>();
+
+        public async Task GetGenres()
         {
-            return _httpClient.GetFromJsonAsync<List<Genres>>("api/genres");
+            Genres = await _httpClient.GetFromJsonAsync<List<Genre>>("api/movie/genres");
         }
     }
 }

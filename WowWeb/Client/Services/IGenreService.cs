@@ -6,6 +6,8 @@ namespace WowWeb.Client.Services
 {
     public interface IGenreService
     {
-        Task<List<Genres>> GetGenres();
+        List<Genre> Genres { get; set; }
+
+        Task GetGenres();
     }
 }

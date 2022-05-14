@@ -17,10 +17,13 @@ namespace WowWeb.Client.Services
             _httpClient = httpClient;
         }
 
-        public Task<List<Movie>> AddMovie(Movie movie)
+        public List<Movie> Movies { get; set; } = new List<Movie>();
+
+        public async Task<List<Movie>> AddMovie(Movie movie)
         {
-            var mess = _httpClient.PostAsJsonAsync("api/movie", movie);
-            return mess.Result.Content.ReadFromJsonAsync<List<Movie>>();
+            var mess = await _httpClient.PostAsJsonAsync("api/movie", movie);
+            Movies = await mess.Content.ReadFromJsonAsync<List<Movie>>();
+            return Movies;
         }
 
         public Task<Movie> GetMovie(int id)
@@ -28,9 +31,10 @@ namespace WowWeb.Client.Services
             return _httpClient.GetFromJsonAsync<Movie>($"api/movie/{id}");
         }
 
-        public Task<List<Movie>> GetMovies()
+        public async Task<List<Movie>> GetMovies()
         {
-            return _httpClient.GetFromJsonAsync<List<Movie>>("api/movie");
+            Movies = await _httpClient.GetFromJsonAsync<List<Movie>>("api/movie");
+            return Movies;
         }
     }
 }
