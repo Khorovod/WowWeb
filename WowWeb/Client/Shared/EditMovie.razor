@@ -1,0 +1,26 @@
+﻿<h3>EditMovie</h3>
+
+<EditForm Model="Movie" OnSubmit="OnSubmit">
+    <div class="form-group">
+        <label>Название</label>
+        <InputText class="form-control" @bind-Value="Movie.Title"></InputText>
+    </div>
+    <div class="form-group">
+        <label>Кратко</label>
+        <InputText class="form-control" @bind-Value="Movie.Description"></InputText>
+    </div>
+    <div class="form-group">
+        <label>Рейтинг</label>
+        <InputNumber class="form-control" @bind-Value="Movie.Rating"></InputNumber>
+    </div>
+    <button type="submit" class="btn btn-success float-xl-right">Подтвердить</button>
+</EditForm>
+
+@code {
+    public Movie Movie { get; set; } = new();
+
+    void OnSubmit()
+    {
+        Console.WriteLine("submit");
+    }
+}

@@ -1,0 +1,47 @@
+﻿@page "/movie/{id:int}"
+@inject IMovieService _movieService
+@inject NavigationManager _navigation
+
+
+<div class="top-row">
+    <button class="btn btn-primary sticky-top float-right" @onclick="ToMovies">Back</button>
+    <br />
+</div>
+
+<content class="container-fluid">
+    @if (movie == null)
+    {
+        <div>
+            <span>Movie is loading...</span>
+        </div>
+    }
+    else
+    {
+        <h1>@movie.Title</h1>
+        <h3>Wow such a movie you choose!</h3>
+        <p>
+            <i>Its a @movie.Genre.Name.ToString() !</i>
+        </p>
+        <p>Тут чтото по-русски написано</p>
+    }
+</content>
+
+
+
+
+@code {
+       [Parameter]
+       public int Id { get; set; }
+
+        WowWeb.Shared.Movie movie = null;
+        protected async override Task OnInitializedAsync()
+        {
+            movie = await _movieService.GetMovie(Id);
+        }
+
+        void ToMovies()
+        {
+            _navigation.NavigateTo("/movies");
+        }
+
+        }

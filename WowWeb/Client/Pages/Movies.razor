@@ -1,0 +1,59 @@
+﻿@page "/movies"
+@inject IMovieService _movieService
+@inject NavigationManager _navigation
+
+<h1>Movies!</h1>
+<h3>Wow such a movie</h3>
+<p>Тут чтото по-русски написано</p>
+
+
+@if (MovieList.Count == 0)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Жанр</th>
+                <th>Рейтинг</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in MovieList)
+            {
+                <tr>
+                    <td>@movie.Title</td>
+                    <td>@movie.Description</td>
+                    <td>@movie.Genre.Name.ToString()</td>
+                    <td>@movie.Rating</td>
+                    <td>
+                        <button class="btn btn-secondary" @onclick="() => ToMovie(movie.Id)"> Show </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+<EditMovie></EditMovie>
+
+
+@code {
+
+    List<WowWeb.Shared.Movie> MovieList = new List<WowWeb.Shared.Movie>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        MovieList = await _movieService.GetMovies();
+    }
+    void ToMovie(int id)
+    {
+        _navigation.NavigateTo($"/movie/{id}");
+    }
+}
