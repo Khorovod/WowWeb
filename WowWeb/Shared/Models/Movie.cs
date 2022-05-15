@@ -8,7 +8,7 @@ namespace WowWeb.Shared
 {
     public class Movie
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
         public string Title { get; set; }
         public string Description { get; set; }
         public double Rating { get; set; }

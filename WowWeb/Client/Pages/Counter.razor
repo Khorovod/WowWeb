@@ -1,16 +1,34 @@
 ﻿@page "/counter"
 
-<h1>Counter</h1>
+<h1>Кликни 13 раз!</h1>
 
-<p>Current count: @currentCount</p>
+<p>Пока кликнуто: @currentCount</p>
+<p>@text</p>
+<p>@text1</p>
+<p>@text2</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary btn-outline-danger" @onclick="IncrementCount">Тык</button>
 
 @code {
     private int currentCount = 0;
+    string text = "";
+    string text1 = "";
+    string text2 = "";
 
     private void IncrementCount()
     {
         currentCount++;
+        if (currentCount == 13)
+        {
+            text = "Вау ты реально делаешь что скажут??....";
+        }
+        else if (currentCount == 16)
+        {
+            text1 = "Больше можно не тыкать уже...";
+        }
+        else if (currentCount == 30)
+        {
+            text2 = "Вот же настырный, ну тыкай, ладно....";
+        }
     }
 }

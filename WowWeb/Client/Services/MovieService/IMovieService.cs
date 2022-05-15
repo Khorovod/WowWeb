@@ -9,9 +9,12 @@ namespace WowWeb.Client.Services
     {
         List<Movie> Movies { get; set; }
 
+        event Action OnMoviesChange;
+
         Task<List<Movie>> GetMovies();
         Task<Movie> GetMovie(int id);
         Task<List<Movie>> AddMovie(Movie movie);
-
+        Task<Movie> UpdateMovie(Movie movie);
+        Task<List<Movie>> DeleteMovie(int id);
     }
 }

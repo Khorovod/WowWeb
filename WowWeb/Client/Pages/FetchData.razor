@@ -2,9 +2,9 @@
 @using WowWeb.Shared
 @inject HttpClient Http
 
-<h1>Weather forecast</h1>
+<h1>Настоящий прогноз погоды</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>Честно-честно</p>
 
 @if (forecasts == null)
 {
@@ -15,10 +15,9 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Дата</th>
+                <th>Температура (C)</th>
+                <th>В общем</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +26,6 @@ else
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
                     <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
                     <td>@forecast.Summary</td>
                 </tr>
             }

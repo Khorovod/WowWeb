@@ -2,13 +2,14 @@
 @inject IMovieService _movieService
 @inject IGenreService _genreService
 @inject NavigationManager _navigation
+@implements IDisposable
 
 <h1>Movies!</h1>
 <h3>Wow such a movie</h3>
 <p>Тут чтото по-русски написано</p>
 
 
-@if (MovieList.Count == 0)
+@if (_movieService.Movies.Count == 0)
 {
     <span>Loading...</span>
 }
@@ -25,7 +26,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var movie in MovieList)
+            @foreach (var movie in _movieService.Movies)
             {
                 <tr>
                     <td>@movie.Title</td>
@@ -33,7 +34,11 @@ else
                     <td>@movie.Genre.Name.ToString()</td>
                     <td>@movie.Rating</td>
                     <td>
-                        <button class="btn btn-secondary" @onclick="() => ToMovie(movie.Id)"> Show </button>
+                        <button class="btn btn-link" @onclick="() => ToMovie(movie.Id)">Открыть</button>
+                        <br />
+                        <button class="btn btn-info" @onclick="() => EditMovie(movie.Id)">Изменить</button>
+                        <br />
+                        <button class="btn btn-danger" @onclick="() => DeleteMovie(movie.Id)">Удалить</button>
                     </td>
                 </tr>
             }
@@ -42,19 +47,33 @@ else
 
 }
 
-<EditMovie></EditMovie>
+<EditMovie Movie="MovieToEdit"></EditMovie>
 
 
 @code {
 
-    List<WowWeb.Shared.Movie> MovieList = new List<WowWeb.Shared.Movie>();
+    WowWeb.Shared.Movie MovieToEdit = new();
 
     protected override async Task OnInitializedAsync()
     {
-        MovieList = await _movieService.GetMovies();
+        await _movieService.GetMovies();
+        _movieService.OnMoviesChange += StateHasChanged;
     }
     void ToMovie(int id)
     {
         _navigation.NavigateTo($"/movie/{id}");
+    }
+    void EditMovie(int id)
+    {
+        MovieToEdit = _movieService.Movies.First(m => m.Id == id);
+    }
+
+    void DeleteMovie(int id)
+    {
+        _movieService.DeleteMovie(id);
+    }
+    public void Dispose()
+    {
+        _movieService.OnMoviesChange -= StateHasChanged;
     }
 }
