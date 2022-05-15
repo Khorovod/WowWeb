@@ -2,6 +2,15 @@
 @inject IMovieService _movieService
 @inject IJSRuntime _js
 
+@if (Movie.Id == 0)
+{
+    <h4>Добавить фильм</h4>
+}
+else
+{
+    <h4>Изменить фильм "@Movie.Title"</h4>
+}
+
 <EditForm Model="Movie" OnSubmit="OnSubmit">
     <div class="form-group">
         <label>Название</label>
@@ -25,7 +34,7 @@
         </InputSelect>
     </div>
     <br />
-    <button type="submit" class="btn btn-success float-xl-right">Подтвердить</button>
+    <button type="submit" class="btn btn-outline-primary float-xl-right">Подтвердить</button>
 </EditForm>
 
 @code {
@@ -44,7 +53,7 @@
         await _js.InvokeVoidAsync("console.log", Movie);
 
         Movie.Genre = _genreService.Genres.FirstOrDefault(g => g.Id == genreId);
-        if(Movie.Id == 0)
+        if (Movie.Id == 0)
         {
             Console.WriteLine("CREATE");
             await _movieService.AddMovie(Movie);
@@ -54,5 +63,6 @@
             Console.WriteLine("UPDATE");
             await _movieService.UpdateMovie(Movie);
         }
+        Movie = new();
     }
 }
