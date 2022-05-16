@@ -68,8 +68,9 @@ namespace WowWeb.Server.Controllers
             {
                 return NotFound("Movie not found");
             }
-            movieToUpd = movie;
+            var index =_dummyMoviesFromDb.IndexOf(movieToUpd);
 
+            _dummyMoviesFromDb[index] = movie;
             return Created("", movie);
         }
 
